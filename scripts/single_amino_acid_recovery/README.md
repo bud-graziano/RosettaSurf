@@ -1,0 +1,3 @@
+# Single amino acid recovery
+
+Included files are `xml` scripts that are executed with the RosettaScript framework, and `submitter.sh` SLURM files that can be used to submit the computational scripts to a HPC cluster. The benchmark was performed in the presence (bound) and the absence of the binder (unbound). The `counts` directory contains scripts and results of anaylzing which protein structure featured which types of amino acids at their surface. Based on this analysis, protein structures were selected for the recovery benchmark.

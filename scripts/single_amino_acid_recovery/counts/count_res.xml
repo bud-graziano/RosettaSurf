@@ -1,0 +1,60 @@
+<ROSETTASCRIPTS>
+  <SCOREFXNS>
+  </SCOREFXNS>
+  <RESIDUE_SELECTORS>
+     	<Chain name="chains1" chains="%%c1%%"/>
+     	<Chain name="chains2" chains="%%c2%%"/>
+	<InterfaceByVector name="interface" cb_dist_cut="11.0" grp1_selector="chains1" grp2_selector="chains2"/>
+  </RESIDUE_SELECTORS>
+  <TASKOPERATIONS>
+  </TASKOPERATIONS>
+  <FILTERS>
+	<ResidueCount name="count_ala" residue_types="ALA" count_as_percentage="0" residue_selector="interface" confidence="0"/>
+	<ResidueCount name="count_arg" residue_types="ARG" count_as_percentage="0" residue_selector="interface" confidence="0"/>
+	<ResidueCount name="count_asn" residue_types="ASN" count_as_percentage="0" residue_selector="interface" confidence="0"/>
+	<ResidueCount name="count_asp" residue_types="ASP" count_as_percentage="0" residue_selector="interface" confidence="0"/>
+	<ResidueCount name="count_cys" residue_types="CYS" count_as_percentage="0" residue_selector="interface" confidence="0"/>
+	<ResidueCount name="count_gln" residue_types="GLN" count_as_percentage="0" residue_selector="interface" confidence="0"/>
+	<ResidueCount name="count_glu" residue_types="GLU" count_as_percentage="0" residue_selector="interface" confidence="0"/>
+	<ResidueCount name="count_gly" residue_types="GLY" count_as_percentage="0" residue_selector="interface" confidence="0"/>
+	<ResidueCount name="count_his" residue_types="HIS" count_as_percentage="0" residue_selector="interface" confidence="0"/>
+	<ResidueCount name="count_ile" residue_types="ILE" count_as_percentage="0" residue_selector="interface" confidence="0"/>
+	<ResidueCount name="count_leu" residue_types="LEU" count_as_percentage="0" residue_selector="interface" confidence="0"/>
+	<ResidueCount name="count_lys" residue_types="LYS" count_as_percentage="0" residue_selector="interface" confidence="0"/>
+	<ResidueCount name="count_met" residue_types="MET" count_as_percentage="0" residue_selector="interface" confidence="0"/>
+	<ResidueCount name="count_phe" residue_types="PHE" count_as_percentage="0" residue_selector="interface" confidence="0"/>
+	<ResidueCount name="count_pro" residue_types="PRO" count_as_percentage="0" residue_selector="interface" confidence="0"/>
+	<ResidueCount name="count_ser" residue_types="SER" count_as_percentage="0" residue_selector="interface" confidence="0"/>
+	<ResidueCount name="count_thr" residue_types="THR" count_as_percentage="0" residue_selector="interface" confidence="0"/>
+	<ResidueCount name="count_trp" residue_types="TRP" count_as_percentage="0" residue_selector="interface" confidence="0"/>
+	<ResidueCount name="count_tyr" residue_types="TYR" count_as_percentage="0" residue_selector="interface" confidence="0"/>
+	<ResidueCount name="count_val" residue_types="VAL" count_as_percentage="0" residue_selector="interface" confidence="0"/>
+  </FILTERS>
+  <MOVERS>
+  </MOVERS>
+  <APPLY_TO_POSE>
+  </APPLY_TO_POSE>
+  <PROTOCOLS>
+	<Add filter_name="count_ala" />
+	<Add filter_name="count_arg" />
+	<Add filter_name="count_asn" />
+	<Add filter_name="count_asp" />
+	<Add filter_name="count_cys" />
+	<Add filter_name="count_gln" />
+	<Add filter_name="count_glu" />
+	<Add filter_name="count_gly" />
+	<Add filter_name="count_his" />
+	<Add filter_name="count_ile" />
+	<Add filter_name="count_leu" />
+	<Add filter_name="count_lys" />
+	<Add filter_name="count_met" />
+	<Add filter_name="count_phe" />
+	<Add filter_name="count_pro" />
+	<Add filter_name="count_ser" />
+	<Add filter_name="count_thr" />
+	<Add filter_name="count_trp" />
+	<Add filter_name="count_tyr" />
+	<Add filter_name="count_val" />
+  </PROTOCOLS>
+  <OUTPUT />
+</ROSETTASCRIPTS>
