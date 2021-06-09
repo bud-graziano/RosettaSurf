@@ -1,0 +1,3 @@
+# RosettaSurf framework
+
+Contains the `xml` script that is used with the RosettaScript framework to compare substitutions of all amino acids against a known ground truth. The `submitter.sh` SLURM files that can be used to submit the computational script to a HPC cluster, computing the comparisons for each indicated amino acid type. The data produced in this step was used to optimize weights for combining of shape and electrostatic similarity values using linear regression as described in the paper section.
