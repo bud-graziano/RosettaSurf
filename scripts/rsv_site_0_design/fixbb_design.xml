@@ -1,0 +1,71 @@
+<ROSETTASCRIPTS>
+	<SCOREFXNS>
+              	<ScoreFunction name="sfxn" weights="ref2015.wts" />
+	</SCOREFXNS>
+	<RESIDUE_SELECTORS>
+    		<Chain name="target" chains="B"/>
+
+    		<Index name="surface_interface" resnums="18B,23B-26B,28B,29B,32B,33B,35B,36B,39B,40B,72B,61B,64B,65B,69B,73B"/>
+            <Index name="target_interface" resnums="18B,23B-26B,28B,29B,32B,33B,35B,36B,39B,40B,72B"/>
+ 	    <Index name="reference_interface" resnums="36F-45F,132F,135F,136F,139F,140F,143F,144F,146F,147F,148F"/>
+            <Not name="!interface" selector="target_interface"/>
+
+
+
+        </RESIDUE_SELECTORS>
+        <MOVE_MAP_FACTORIES>
+        </MOVE_MAP_FACTORIES>
+        <SIMPLE_METRICS>
+                <SequenceMetric name="seq" />
+                <TotalEnergyMetric name="target_energy" scoretype="total_score" residue_selector="target" scorefxn="sfxn" />
+        </SIMPLE_METRICS>
+<TASKOPERATIONS>
+                <OperateOnResidueSubset name="prevent_not_interface" selector="!interface">
+                        <PreventRepackingRLT/>
+                </OperateOnResidueSubset>
+
+                <OperateOnResidueSubset name="ala" selector="target_interface">
+                        <RestrictAbsentCanonicalAASRLT aas="A"/>
+                </OperateOnResidueSubset>
+
+                <OperateOnResidueSubset name="no_cys" selector="target_interface">
+                        <RestrictAbsentCanonicalAASRLT aas="ADEFGHIKLMNPQRSTVWY"/>
+                </OperateOnResidueSubset>
+
+                <ExtraRotamersGeneric name="ex1ex2" ex1="1" ex2="1" />
+                 <InitializeFromCommandline name="init" />
+
+        </TASKOPERATIONS>
+        <FILTERS>
+                <ShapeIdentity name="shape" min_sc="0.99" residue_selector1="surface_interface" residue_selector2="reference_interface" confidence="1"/>
+                <ShapeIdentity name="si" min_sc="0.5" residue_selector1="surface_interface" residue_selector2="reference_interface" confidence="0" />
+                <ElectrostaticSimilarity name="es" residue_selector1="surface_interface" residue_selector2="reference_interface" use_native="1" partially_solvated="1" confidence="1" min_sc="-0.99"/>
+                <ElectrostaticSimilarity name="elec" residue_selector1="surface_interface" residue_selector2="reference_interface" use_native="1" partially_solvated="1" confidence="0" min_sc="-0.99"/>
+                <CalculatorFilter confidence="1" equation="(1 - (1 / (1 + EXP(-(-13.79986756 + (-13.78594078 * ES) + (14.64347448 * SS))))))" name="comb_filters" threshold="0.0001">
+                        <Var filter_name="shape" name="SS"/>
+                        <Var filter_name="es" name="ES"/>
+                </CalculatorFilter>
+                <ScoreType name="score" scorefxn="sfxn" score_type="total_score" threshold="0.0" confidence="0" />
+                <ResidueCount name="nres" confidence="0" />
+                <CalculatorFilter name="score_res" confidence="1" equation="SCORE/NRES" threshold="4.1" >
+                        <Var name="SCORE" filter_name="score" />
+                        <Var name="NRES" filter_name="nres" />
+                </CalculatorFilter>
+        </FILTERS>
+        <MOVERS>
+                <RunSimpleMetrics name="run_metrics" metrics="seq,target_energy" />
+
+                <PackRotamersMover name="alapose" task_operations="ala,prevent_not_interface" scorefxn="sfxn"/>
+                <PackRotamersMover name="fixbb1" scorefxn="sfxn" task_operations="ex1ex2,prevent_not_interface,init,no_cys" />
+        </MOVERS>
+        <APPLY_TO_POSE>
+        </APPLY_TO_POSE>
+        <PROTOCOLS>
+                <Add mover_name="alapose" />
+                <Add mover_name="fixbb1" />
+                <Add mover_name="run_metrics" />
+                <Add filter_name="si" />
+                <Add filter_name="elec" />
+        </PROTOCOLS>
+        <OUTPUT />
+</ROSETTASCRIPTS>

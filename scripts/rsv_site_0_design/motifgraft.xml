@@ -1,0 +1,31 @@
+<ROSETTASCRIPTS>
+        <SCOREFXNS>
+        </SCOREFXNS>
+        <RESIDUE_SELECTORS>
+        </RESIDUE_SELECTORS>
+        <TASKOPERATIONS>
+        </TASKOPERATIONS>
+        <FILTERS>
+        </FILTERS>
+        <MOVERS>
+        <MotifGraft name="motif_grafting"
+        context_structure="d25_ab_onechain_X.pdb"
+        motif_structure="d25_helix.pdb"
+        RMSD_tolerance="1.5"
+        NC_points_RMSD_tolerance="1"
+        clash_test_residue="GLY"
+        clash_score_cutoff="10"
+        combinatory_fragment_size_delta="0:0"
+        full_motif_bb_alignment="1"
+        revert_graft_to_native_sequence="0"
+        allow_repeat_same_graft_output="0"
+        graft_only_hotspots_by_replacement="1"
+        hotspots="12:14:15:16:17:19:21:23:24"/>
+        </MOVERS>
+        <APPLY_TO_POSE>
+        </APPLY_TO_POSE>
+        <PROTOCOLS>
+                <Add mover_name="motif_grafting" />
+        </PROTOCOLS>
+        <OUTPUT />
+</ROSETTASCRIPTS>

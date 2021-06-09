@@ -1,0 +1,3 @@
+# Surface-centric design of a novel RSV site 0 immunogen
+
+Included files are `xml` scripts that are executed with the RosettaScript framework along with `resfile`, and `submitter.sh` SLURM files that can be used to submit the computational scripts to a HPC cluster. PDB structures are deposited that were used during the design process. The `motifgraft.xml` script performs the scaffold search and side chain grafting of the epitope helix as described in the paper section. The `surface_design.xml` script performs RosettaSurf design while `fixbb_design.xml` is used for standard Rosetta FixBB modelling.
