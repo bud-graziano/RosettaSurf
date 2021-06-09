@@ -1,0 +1,312 @@
+<ROSETTASCRIPTS>
+  <SCOREFXNS>
+  </SCOREFXNS>
+  <RESIDUE_SELECTORS>
+	<Chain name="target" chains="X"/>
+
+        <Index name="surface_interface" resnums="343X,367X,368X,369X,370X,422X,423X,424X,425X,426X,427X,428X,429X,430X,431X,433X,442X,466X,468X,470X,472X,473X,502X,519X,520X,521X,522X"/>
+        <Index name="target_interface" resnums="424X,425X,426X,427X,428X,429X,430X,431X,442X,466X,468X,473X,520X"/>
+        <Not name="!target_interface" selector="target_interface"/>
+        <Index name="point_mutant" resnums="%%r%%"/>
+        <Not name="!point_mutant" selector="point_mutant"/>
+        
+  </RESIDUE_SELECTORS>
+  <SIMPLE_METRICS>
+          <ElectrostaticSimilarityMetric name="esc" residue_selector1="point_mutant" residue_selector2="point_mutant" use_native="1" partially_solvated="1" />
+  </SIMPLE_METRICS>
+  <TASKOPERATIONS>
+        <OperateOnResidueSubset name="prevent_not_target_interface" selector="!target_interface">
+            <PreventRepackingRLT/>
+        </OperateOnResidueSubset>
+        <OperateOnResidueSubset name="prevent_not_point_mutant" selector="!point_mutant">
+            <PreventRepackingRLT/>
+        </OperateOnResidueSubset>
+
+        <OperateOnResidueSubset name="full_ala" selector="target_interface">
+            <RestrictAbsentCanonicalAASRLT aas="A"/>
+        </OperateOnResidueSubset>
+        <OperateOnResidueSubset name="ala" selector="point_mutant">
+            <RestrictAbsentCanonicalAASRLT aas="A"/>
+        </OperateOnResidueSubset>
+                <OperateOnResidueSubset name="arg" selector="point_mutant">
+            <RestrictAbsentCanonicalAASRLT aas="R"/>
+        </OperateOnResidueSubset>
+                <OperateOnResidueSubset name="asn" selector="point_mutant">
+            <RestrictAbsentCanonicalAASRLT aas="N"/>
+        </OperateOnResidueSubset>
+                <OperateOnResidueSubset name="asp" selector="point_mutant">
+            <RestrictAbsentCanonicalAASRLT aas="D"/>
+        </OperateOnResidueSubset>
+                <OperateOnResidueSubset name="cys" selector="point_mutant">
+            <RestrictAbsentCanonicalAASRLT aas="C"/>
+        </OperateOnResidueSubset>
+                <OperateOnResidueSubset name="gln" selector="point_mutant">
+            <RestrictAbsentCanonicalAASRLT aas="Q"/>
+        </OperateOnResidueSubset>
+                <OperateOnResidueSubset name="glu" selector="point_mutant">
+            <RestrictAbsentCanonicalAASRLT aas="E"/>
+        </OperateOnResidueSubset>
+                <OperateOnResidueSubset name="gly" selector="point_mutant">
+            <RestrictAbsentCanonicalAASRLT aas="G"/>
+        </OperateOnResidueSubset>
+                <OperateOnResidueSubset name="his" selector="point_mutant">
+            <RestrictAbsentCanonicalAASRLT aas="H"/>
+        </OperateOnResidueSubset>
+                <OperateOnResidueSubset name="ile" selector="point_mutant">
+            <RestrictAbsentCanonicalAASRLT aas="I"/>
+        </OperateOnResidueSubset>
+                <OperateOnResidueSubset name="leu" selector="point_mutant">
+            <RestrictAbsentCanonicalAASRLT aas="L"/>
+        </OperateOnResidueSubset>
+                <OperateOnResidueSubset name="lys" selector="point_mutant">
+            <RestrictAbsentCanonicalAASRLT aas="K"/>
+        </OperateOnResidueSubset>
+                <OperateOnResidueSubset name="met" selector="point_mutant">
+            <RestrictAbsentCanonicalAASRLT aas="M"/>
+        </OperateOnResidueSubset>
+                <OperateOnResidueSubset name="phe" selector="point_mutant">
+            <RestrictAbsentCanonicalAASRLT aas="F"/>
+        </OperateOnResidueSubset>
+                <OperateOnResidueSubset name="pro" selector="point_mutant">
+            <RestrictAbsentCanonicalAASRLT aas="P"/>
+        </OperateOnResidueSubset>
+                <OperateOnResidueSubset name="ser" selector="point_mutant">
+            <RestrictAbsentCanonicalAASRLT aas="S"/>
+        </OperateOnResidueSubset>
+                <OperateOnResidueSubset name="thr" selector="point_mutant">
+            <RestrictAbsentCanonicalAASRLT aas="T"/>
+        </OperateOnResidueSubset>
+                <OperateOnResidueSubset name="trp" selector="point_mutant">
+            <RestrictAbsentCanonicalAASRLT aas="W"/>
+        </OperateOnResidueSubset>
+                <OperateOnResidueSubset name="tyr" selector="point_mutant">
+            <RestrictAbsentCanonicalAASRLT aas="Y"/>
+        </OperateOnResidueSubset>
+                <OperateOnResidueSubset name="val" selector="point_mutant">
+            <RestrictAbsentCanonicalAASRLT aas="V"/>
+        </OperateOnResidueSubset>
+
+        <ExtraRotamersGeneric name="ex1ex2" ex1="1" ex2="1" />
+  </TASKOPERATIONS>
+  <FILTERS>
+     	<ShapeIdentity name="si" min_sc="0.99" residue_selector1="point_mutant" residue_selector2="point_mutant" confidence="0" />
+	<ShapeComplementarity name="sc" jump="1" confidence="0" />
+	<EnergyPerResidue name="epr" score_type="total_score" pdb_num="%%r%%" />
+
+  </FILTERS>
+  <MOVERS>
+        <PackRotamersMover name="all_ala" task_operations="ex1ex2,full_ala,prevent_not_target_interface" />
+        
+        <PackRotamersMover name="packer_ala" task_operations="ex1ex2,prevent_not_point_mutant,ala" />
+        <PackRotamersMover name="packer_arg" task_operations="ex1ex2,prevent_not_point_mutant,arg" />
+        <PackRotamersMover name="packer_asn" task_operations="ex1ex2,prevent_not_point_mutant,asn" />
+        <PackRotamersMover name="packer_asp" task_operations="ex1ex2,prevent_not_point_mutant,asp" />
+        <PackRotamersMover name="packer_cys" task_operations="ex1ex2,prevent_not_point_mutant,cys" />
+        <PackRotamersMover name="packer_gln" task_operations="ex1ex2,prevent_not_point_mutant,gln" />
+        <PackRotamersMover name="packer_glu" task_operations="ex1ex2,prevent_not_point_mutant,glu" />
+        <PackRotamersMover name="packer_gly" task_operations="ex1ex2,prevent_not_point_mutant,gly" />
+        <PackRotamersMover name="packer_his" task_operations="ex1ex2,prevent_not_point_mutant,his" />
+        <PackRotamersMover name="packer_ile" task_operations="ex1ex2,prevent_not_point_mutant,ile" />
+        <PackRotamersMover name="packer_leu" task_operations="ex1ex2,prevent_not_point_mutant,leu" />
+        <PackRotamersMover name="packer_lys" task_operations="ex1ex2,prevent_not_point_mutant,lys" />
+        <PackRotamersMover name="packer_met" task_operations="ex1ex2,prevent_not_point_mutant,met" />
+        <PackRotamersMover name="packer_phe" task_operations="ex1ex2,prevent_not_point_mutant,phe" />
+        <PackRotamersMover name="packer_pro" task_operations="ex1ex2,prevent_not_point_mutant,pro" />
+        <PackRotamersMover name="packer_ser" task_operations="ex1ex2,prevent_not_point_mutant,ser" />
+        <PackRotamersMover name="packer_thr" task_operations="ex1ex2,prevent_not_point_mutant,thr" />
+        <PackRotamersMover name="packer_trp" task_operations="ex1ex2,prevent_not_point_mutant,trp" />
+        <PackRotamersMover name="packer_tyr" task_operations="ex1ex2,prevent_not_point_mutant,tyr" />
+        <PackRotamersMover name="packer_val" task_operations="ex1ex2,prevent_not_point_mutant,val" />
+        
+        <FilterReportAsPoseExtraScoresMover name="report_ala_si" report_as="si_ala" filter_name="si"/>
+        <FilterReportAsPoseExtraScoresMover name="report_ala_sc" report_as="sc_ala" filter_name="sc"/>
+        <FilterReportAsPoseExtraScoresMover name="report_ala_epr" report_as="epr_ala" filter_name="epr"/>
+        <FilterReportAsPoseExtraScoresMover name="report_arg_si" report_as="si_arg" filter_name="si"/>
+        <FilterReportAsPoseExtraScoresMover name="report_arg_sc" report_as="sc_arg" filter_name="sc"/>
+        <FilterReportAsPoseExtraScoresMover name="report_arg_epr" report_as="epr_arg" filter_name="epr"/>
+        <FilterReportAsPoseExtraScoresMover name="report_asn_si" report_as="si_asn" filter_name="si"/>
+        <FilterReportAsPoseExtraScoresMover name="report_asn_sc" report_as="sc_asn" filter_name="sc"/>
+        <FilterReportAsPoseExtraScoresMover name="report_asn_epr" report_as="epr_asn" filter_name="epr"/>
+        <FilterReportAsPoseExtraScoresMover name="report_asp_si" report_as="si_asp" filter_name="si"/>
+        <FilterReportAsPoseExtraScoresMover name="report_asp_sc" report_as="sc_asp" filter_name="sc"/>
+        <FilterReportAsPoseExtraScoresMover name="report_asp_epr" report_as="epr_asp" filter_name="epr"/>
+        <FilterReportAsPoseExtraScoresMover name="report_cys_si" report_as="si_cys" filter_name="si"/>
+        <FilterReportAsPoseExtraScoresMover name="report_cys_sc" report_as="sc_cys" filter_name="sc"/>
+        <FilterReportAsPoseExtraScoresMover name="report_cys_epr" report_as="epr_cys" filter_name="epr"/>
+        <FilterReportAsPoseExtraScoresMover name="report_gln_si" report_as="si_gln" filter_name="si"/>
+        <FilterReportAsPoseExtraScoresMover name="report_gln_sc" report_as="sc_gln" filter_name="sc"/>
+        <FilterReportAsPoseExtraScoresMover name="report_gln_epr" report_as="epr_gln" filter_name="epr"/>
+        <FilterReportAsPoseExtraScoresMover name="report_glu_si" report_as="si_glu" filter_name="si"/>
+        <FilterReportAsPoseExtraScoresMover name="report_glu_sc" report_as="sc_glu" filter_name="sc"/>
+        <FilterReportAsPoseExtraScoresMover name="report_glu_epr" report_as="epr_glu" filter_name="epr"/>
+        <FilterReportAsPoseExtraScoresMover name="report_gly_si" report_as="si_gly" filter_name="si"/>
+        <FilterReportAsPoseExtraScoresMover name="report_gly_sc" report_as="sc_gly" filter_name="sc"/>
+        <FilterReportAsPoseExtraScoresMover name="report_gly_epr" report_as="epr_gly" filter_name="epr"/>
+        <FilterReportAsPoseExtraScoresMover name="report_his_si" report_as="si_his" filter_name="si"/>
+        <FilterReportAsPoseExtraScoresMover name="report_his_sc" report_as="sc_his" filter_name="sc"/>
+        <FilterReportAsPoseExtraScoresMover name="report_his_epr" report_as="epr_his" filter_name="epr"/>
+        <FilterReportAsPoseExtraScoresMover name="report_ile_si" report_as="si_ile" filter_name="si"/>
+        <FilterReportAsPoseExtraScoresMover name="report_ile_sc" report_as="sc_ile" filter_name="sc"/>
+        <FilterReportAsPoseExtraScoresMover name="report_ile_epr" report_as="epr_ile" filter_name="epr"/>
+        <FilterReportAsPoseExtraScoresMover name="report_leu_si" report_as="si_leu" filter_name="si"/>
+        <FilterReportAsPoseExtraScoresMover name="report_leu_sc" report_as="sc_leu" filter_name="sc"/>
+        <FilterReportAsPoseExtraScoresMover name="report_leu_epr" report_as="epr_leu" filter_name="epr"/>
+        <FilterReportAsPoseExtraScoresMover name="report_lys_si" report_as="si_lys" filter_name="si"/>
+        <FilterReportAsPoseExtraScoresMover name="report_lys_sc" report_as="sc_lys" filter_name="sc"/>
+        <FilterReportAsPoseExtraScoresMover name="report_lys_epr" report_as="epr_lys" filter_name="epr"/>
+        <FilterReportAsPoseExtraScoresMover name="report_met_si" report_as="si_met" filter_name="si"/>
+        <FilterReportAsPoseExtraScoresMover name="report_met_sc" report_as="sc_met" filter_name="sc"/>
+        <FilterReportAsPoseExtraScoresMover name="report_met_epr" report_as="epr_met" filter_name="epr"/>
+        <FilterReportAsPoseExtraScoresMover name="report_phe_si" report_as="si_phe" filter_name="si"/>
+        <FilterReportAsPoseExtraScoresMover name="report_phe_sc" report_as="sc_phe" filter_name="sc"/>
+        <FilterReportAsPoseExtraScoresMover name="report_phe_epr" report_as="epr_phe" filter_name="epr"/>
+        <FilterReportAsPoseExtraScoresMover name="report_pro_si" report_as="si_pro" filter_name="si"/>
+        <FilterReportAsPoseExtraScoresMover name="report_pro_sc" report_as="sc_pro" filter_name="sc"/>
+        <FilterReportAsPoseExtraScoresMover name="report_pro_epr" report_as="epr_pro" filter_name="epr"/>
+        <FilterReportAsPoseExtraScoresMover name="report_ser_si" report_as="si_ser" filter_name="si"/>
+        <FilterReportAsPoseExtraScoresMover name="report_ser_sc" report_as="sc_ser" filter_name="sc"/>
+        <FilterReportAsPoseExtraScoresMover name="report_ser_epr" report_as="epr_ser" filter_name="epr"/>
+        <FilterReportAsPoseExtraScoresMover name="report_thr_si" report_as="si_thr" filter_name="si"/>
+        <FilterReportAsPoseExtraScoresMover name="report_thr_sc" report_as="sc_thr" filter_name="sc"/>
+        <FilterReportAsPoseExtraScoresMover name="report_thr_epr" report_as="epr_thr" filter_name="epr"/>
+        <FilterReportAsPoseExtraScoresMover name="report_trp_si" report_as="si_trp" filter_name="si"/>
+        <FilterReportAsPoseExtraScoresMover name="report_trp_sc" report_as="sc_trp" filter_name="sc"/>
+        <FilterReportAsPoseExtraScoresMover name="report_trp_epr" report_as="epr_trp" filter_name="epr"/>
+        <FilterReportAsPoseExtraScoresMover name="report_tyr_si" report_as="si_tyr" filter_name="si"/>
+        <FilterReportAsPoseExtraScoresMover name="report_tyr_sc" report_as="sc_tyr" filter_name="sc"/>
+        <FilterReportAsPoseExtraScoresMover name="report_tyr_epr" report_as="epr_tyr" filter_name="epr"/>
+        <FilterReportAsPoseExtraScoresMover name="report_val_si" report_as="si_val" filter_name="si"/>
+        <FilterReportAsPoseExtraScoresMover name="report_val_sc" report_as="sc_val" filter_name="sc"/>
+        <FilterReportAsPoseExtraScoresMover name="report_val_epr" report_as="epr_val" filter_name="epr"/>
+
+        <RunSimpleMetrics name="run_ala" metrics="esc" suffix="_ala"/>
+        <RunSimpleMetrics name="run_arg" metrics="esc" suffix="_arg"/>
+        <RunSimpleMetrics name="run_asn" metrics="esc" suffix="_asn"/>
+        <RunSimpleMetrics name="run_asp" metrics="esc" suffix="_asp"/>
+        <RunSimpleMetrics name="run_cys" metrics="esc" suffix="_cys"/>
+        <RunSimpleMetrics name="run_gln" metrics="esc" suffix="_gln"/>
+        <RunSimpleMetrics name="run_glu" metrics="esc" suffix="_glu"/>
+        <RunSimpleMetrics name="run_gly" metrics="esc" suffix="_gly"/>
+        <RunSimpleMetrics name="run_his" metrics="esc" suffix="_his"/>
+        <RunSimpleMetrics name="run_ile" metrics="esc" suffix="_ile"/>
+        <RunSimpleMetrics name="run_leu" metrics="esc" suffix="_leu"/>
+        <RunSimpleMetrics name="run_lys" metrics="esc" suffix="_lys"/>
+        <RunSimpleMetrics name="run_met" metrics="esc" suffix="_met"/>
+        <RunSimpleMetrics name="run_phe" metrics="esc" suffix="_phe"/>
+        <RunSimpleMetrics name="run_pro" metrics="esc" suffix="_pro"/>
+        <RunSimpleMetrics name="run_ser" metrics="esc" suffix="_ser"/>
+        <RunSimpleMetrics name="run_thr" metrics="esc" suffix="_thr"/>
+        <RunSimpleMetrics name="run_trp" metrics="esc" suffix="_trp"/>
+        <RunSimpleMetrics name="run_tyr" metrics="esc" suffix="_tyr"/>
+        <RunSimpleMetrics name="run_val" metrics="esc" suffix="_val"/>
+        
+
+
+  </MOVERS>
+  <APPLY_TO_POSE>
+  </APPLY_TO_POSE>
+  <PROTOCOLS>
+        <Add mover_name="all_ala"  />
+        <Add mover_name="packer_ala"  />
+        <Add mover_name="report_ala_si"  />
+        <Add mover_name="report_ala_sc"  />
+        <Add mover_name="report_ala_epr" />
+        <Add mover_name="run_ala" />
+        <Add mover_name="packer_arg"  />
+        <Add mover_name="report_arg_si"  />
+        <Add mover_name="report_arg_sc"  />
+        <Add mover_name="report_arg_epr" />
+        <Add mover_name="run_arg" />
+        <Add mover_name="packer_asn"  />
+        <Add mover_name="report_asn_si"  />
+        <Add mover_name="report_asn_sc"  />
+        <Add mover_name="report_asn_epr" />
+        <Add mover_name="run_asn" />
+        <Add mover_name="packer_asp"  />
+        <Add mover_name="report_asp_si"  />
+        <Add mover_name="report_asp_sc"  />
+        <Add mover_name="report_asp_epr" />
+        <Add mover_name="run_asp" />
+        <Add mover_name="packer_cys"  />
+        <Add mover_name="report_cys_si"  />
+        <Add mover_name="report_cys_sc"  />
+        <Add mover_name="report_cys_epr" />
+        <Add mover_name="run_cys" />
+        <Add mover_name="packer_gln"  />
+        <Add mover_name="report_gln_si"  />
+        <Add mover_name="report_gln_sc"  />
+        <Add mover_name="report_gln_epr" />
+        <Add mover_name="run_gln" />
+        <Add mover_name="packer_glu"  />
+        <Add mover_name="report_glu_si"  />
+        <Add mover_name="report_glu_sc"  />
+        <Add mover_name="report_glu_epr" />
+        <Add mover_name="run_glu" />
+        <Add mover_name="packer_gly"  />
+        <Add mover_name="report_gly_si"  />
+        <Add mover_name="report_gly_sc"  />
+        <Add mover_name="report_gly_epr" />
+        <Add mover_name="run_gly" />
+        <Add mover_name="packer_his"  />
+        <Add mover_name="report_his_si"  />
+        <Add mover_name="report_his_sc"  />
+        <Add mover_name="report_his_epr" />
+        <Add mover_name="run_his" />
+        <Add mover_name="packer_ile"  />
+        <Add mover_name="report_ile_si"  />
+        <Add mover_name="report_ile_sc"  />
+        <Add mover_name="report_ile_epr" />
+        <Add mover_name="run_ile" />
+        <Add mover_name="packer_leu"  />
+        <Add mover_name="report_leu_si"  />
+        <Add mover_name="report_leu_sc"  />
+        <Add mover_name="report_leu_epr" />
+        <Add mover_name="run_leu" />
+        <Add mover_name="packer_lys"  />
+        <Add mover_name="report_lys_si"  />
+        <Add mover_name="report_lys_sc"  />
+        <Add mover_name="report_lys_epr" />
+        <Add mover_name="run_lys" />
+        <Add mover_name="packer_met"  />
+        <Add mover_name="report_met_si"  />
+        <Add mover_name="report_met_sc"  />
+        <Add mover_name="report_met_epr" />
+        <Add mover_name="run_met" />
+        <Add mover_name="packer_phe"  />
+        <Add mover_name="report_phe_si"  />
+        <Add mover_name="report_phe_sc"  />
+        <Add mover_name="report_phe_epr" />
+        <Add mover_name="run_phe" />
+        <Add mover_name="packer_pro"  />
+        <Add mover_name="report_pro_si"  />
+        <Add mover_name="report_pro_sc"  />
+        <Add mover_name="report_pro_epr" />
+        <Add mover_name="run_pro" />
+        <Add mover_name="packer_ser"  />
+        <Add mover_name="report_ser_si"  />
+        <Add mover_name="report_ser_sc"  />
+        <Add mover_name="report_ser_epr" />
+        <Add mover_name="run_ser" />
+        <Add mover_name="packer_thr"  />
+        <Add mover_name="report_thr_si"  />
+        <Add mover_name="report_thr_sc"  />
+        <Add mover_name="report_thr_epr" />
+        <Add mover_name="run_thr" />
+        <Add mover_name="packer_trp"  />
+        <Add mover_name="report_trp_si"  />
+        <Add mover_name="report_trp_sc"  />
+        <Add mover_name="report_trp_epr" />
+        <Add mover_name="run_trp" />
+        <Add mover_name="packer_tyr"  />
+        <Add mover_name="report_tyr_si"  />
+        <Add mover_name="report_tyr_sc"  />
+        <Add mover_name="report_tyr_epr" />
+        <Add mover_name="run_tyr" />
+        <Add mover_name="packer_val"  />
+        <Add mover_name="report_val_si"  />
+        <Add mover_name="report_val_sc"  />
+        <Add mover_name="report_val_epr" />
+        <Add mover_name="run_val" />
+  </PROTOCOLS>
+  <OUTPUT />
+</ROSETTASCRIPTS>
