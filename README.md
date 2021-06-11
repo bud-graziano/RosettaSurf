@@ -36,7 +36,7 @@ A basic example of how to use RosettaSurf inside RosettaScript:
 
 
 
-This part of the repository contains computational scripts. Data presented in the paper is stored in a separate [data repository]() at Zenodo. To follow the data analysis, please integrate the data repository into the top-level. Both repositories have a similar structure and contain the following sections:
+This part of the repository contains computational scripts. Data presented in the paper is stored in a separate data repository [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.4917367.svg)](https://doi.org/10.5281/zenodo.4917367). To follow the data analysis, please integrate the data repository into the top-level. Both repositories have a similar structure and contain the following sections:
 
 * **interface recovery** referring to section *Protein interface sequence recovery* in the paper.
 * **interleukin benchmark** referring to section *Computational SSM screening to improve protein binding* in the paper.
