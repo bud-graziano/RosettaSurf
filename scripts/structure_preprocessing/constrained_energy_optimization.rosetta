@@ -1,0 +1,1 @@
+/PATH_TO_ROSETTA/source/bin/relax.default.linuxiccrelease -s $1 @flags
